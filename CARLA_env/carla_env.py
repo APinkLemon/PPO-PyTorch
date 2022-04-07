@@ -122,14 +122,11 @@ class CarlaEnv(object):
         self.ego_vehicle = None
         # print('done.')
 
-    def step(self, action):
-        if isinstance(action, np.ndarray):
-            if action.shape == (1, 3):
-                action = action[0]
-        if action == 4:
+    def step(self, action_index):
+        if action_index == 4:
             action = [0., 0., 0.]
         else:
-            action = self.action_space[action]
+            action = self.action_space[action_index]
         control = carla.VehicleControl()
         control.throttle = action[0]
         control.steer = action[1]
@@ -152,9 +149,6 @@ class CarlaEnv(object):
             return 5
         else:
             return -1
-
-    def _reward_goahead(self):
-        return 1
 
     def _state(self):
         transform = self.ego_vehicle.get_transform()
