@@ -7,7 +7,6 @@ import torch
 import numpy as np
 
 import gym
-import roboschool
 
 from PPO import PPO
 
@@ -18,10 +17,10 @@ def test():
 
     ################## hyperparameters ##################
 
-    # env_name = "CartPole-v1"
-    # has_continuous_action_space = False
-    # max_ep_len = 400
-    # action_std = None
+    env_name = "CartPole-v1"
+    has_continuous_action_space = False
+    max_ep_len = 400
+    action_std = None
 
     # env_name = "LunarLander-v2"
     # has_continuous_action_space = False
@@ -33,10 +32,10 @@ def test():
     # max_ep_len = 1500           # max timesteps in one episode
     # action_std = 0.1            # set same std for action distribution which was used while saving
 
-    env_name = "RoboschoolWalker2d-v1"
-    has_continuous_action_space = True
-    max_ep_len = 1000           # max timesteps in one episode
-    action_std = 0.1            # set same std for action distribution which was used while saving
+    # env_name = "RoboschoolWalker2d-v1"
+    # has_continuous_action_space = True
+    # max_ep_len = 1000           # max timesteps in one episode
+    # action_std = 0.1            # set same std for action distribution which was used while saving
 
     render = True              # render environment on screen
     frame_delay = 0             # if required; add delay b/w frames
