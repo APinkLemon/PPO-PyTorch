@@ -24,15 +24,14 @@ def draw_waypoints(image, points):
     return img_with_waypoints
 
 
-img_init = cv2.imread('maps/Town02_resize.png')
-print("RAW IMAGE: ", img_init.shape)
-img_size = img_init.shape[:2]
+if __name__ == '__main__':
+    img_init = cv2.imread('maps/Town02_resize.png')
 
-vehicle_info = np.load("vehicle_info.npy")
-print(vehicle_info.shape)
-vehicle_pos = vehicle_info[:, :2]
-print(vehicle_pos.shape)
+    vehicle_info = np.load("maps/map2_spawn_points.npy")
+    print(vehicle_info.shape)
+    vehicle_pos = vehicle_info[:, :2]
+    print(vehicle_pos.shape)
 
-img = copy.deepcopy(img_init)
-img = draw_waypoints(img, vehicle_pos)
-cv2.imwrite("test.png", img)
+    img = copy.deepcopy(img_init)
+    img = draw_waypoints(img, vehicle_pos)
+    cv2.imwrite("maps/Town02_with_spawn_points.png", img)
