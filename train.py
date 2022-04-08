@@ -21,7 +21,7 @@ def train():
     has_continuous_action_space = False
 
     max_ep_len = 400                   # max timesteps in one episode
-    max_training_timesteps = int(1e5)  # break training loop if timeteps > max_training_timesteps
+    max_training_timesteps = int(400)  # break training loop if timeteps > max_training_timesteps
 
     # Note: print/log frequencies should be > than max_ep_len
     print_freq = max_ep_len * 4        # print avg reward in the interval (in num timesteps)

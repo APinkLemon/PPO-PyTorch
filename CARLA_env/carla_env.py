@@ -1,4 +1,5 @@
 from CARLA_env import *
+from CARLA_env.carla_data_provider import CarlaDataProvider
 
 
 def norm(vector):
@@ -68,6 +69,8 @@ class CarlaEnv(object):
                                       [0.5, 0.5, 0],
                                       [0.5, -0.5, 0]])
 
+        CarlaDataProvider.set_client(self.client)
+
     def init(self):
         settings = self.world.get_settings()
         settings.fixed_delta_seconds = 0.05
@@ -77,6 +80,10 @@ class CarlaEnv(object):
         ego_vehicle_bp = self.blueprint_library.find('vehicle.dodge.charger_police_2020')
         transform = self.world.get_map().get_spawn_points()[67]
         self.ego_vehicle = self.world.spawn_actor(ego_vehicle_bp, transform)
+
+        CarlaDataProvider.set_world(self.world)
+        CarlaDataProvider.register_actor(self.ego_vehicle)
+
         self.actor_list.append(self.ego_vehicle)
 
         camera_bp = self.blueprint_library.find('sensor.camera.rgb')
@@ -141,10 +148,14 @@ class CarlaEnv(object):
         spectator_rotation = carla.Rotation(-90, 0, 0)
         spectator_transform = carla.Transform(spectator_location, spectator_rotation)
         spectator.set_transform(spectator_transform)
-        # print(self._state())
-        return self._state(), self._reward_brake(action), self._done(), self._info()
 
-    def _reward_brake(self, action):
+        CarlaDataProvider.on_carla_tick()
+        print('-' * 50)
+        print(CarlaDataProvider.get_location(self.ego_vehicle))
+
+        return self._state(), self._reward(action), self._done(), self._info()
+
+    def _reward(self, action):
         if action[0] > 0.5:
             return 5
         else:
